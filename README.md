@@ -6,21 +6,13 @@ Select one layer. Token Contrast reads its solid fill, follows variable aliases 
 
 It reports the contrast ratio and whether the pair passes WCAG AA and AAA for normal text and large text.
 
-## Run it in Figma
+## Install
 
-Development plugins run in the Figma desktop app.
+Install the published plugin from Figma Community:
 
-1. Plugins → Development → **Import plugin from manifest…**
-2. Choose `manifest.json` in this folder.
-3. Select a layer and run **Token Contrast** from Plugins → Development.
+**[Token Contrast on Figma Community](https://www.figma.com/community/plugin/1691903395331204623/token-contrast)**
 
-There is no build step. `code.js` and `ui.html` are what Figma loads.
-
-### If import says the plugin id is already in use
-
-`manifest.json` includes the id of the published Token Contrast plugin. That id is what links this folder to the existing plugin so updates publish to the same listing.
-
-If you are not the publisher, delete the `"id"` line and import again. Figma assigns a new development id.
+Open that page and choose **Open in Figma**. The plugin is then available in any Design file. The full steps, including how to run it, how to read the result, and how to run this repository, are in the [install guide](INSTALL.md).
 
 ## What it checks
 
@@ -41,6 +33,19 @@ Changing the selection recalculates the result.
 | `code.js` | Reads the selection, resolves variables, calculates contrast |
 | `ui.html` | Plugin interface. Styles are inlined because Figma loads the UI as one HTML document |
 | `icon.svg` | Logomark |
+| `INSTALL.md` | Install and usage guide |
+
+## Author
+
+Token Contrast is made by [Jake Patrick](https://www.jakepatrick.me), a product and system designer in London.
+
+- [jakepatrick.me](https://www.jakepatrick.me)
+- [hello@jakepatrick.me](mailto:hello@jakepatrick.me)
+- [LinkedIn](https://www.linkedin.com/in/jake-patrick-)
+- [Bluesky](https://bsky.app/profile/jakep3212.bsky.social)
+- [X](https://x.com/jakepatrickkk)
+
+Issues and pull requests are welcome.
 
 ## License
 
