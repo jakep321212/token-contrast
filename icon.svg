@@ -1,0 +1,27 @@
+<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#tc-texture-edge)">
+<g clip-path="url(#tc-clip)">
+<g filter="url(#tc-texture-soft)">
+<path fill-rule="evenodd" d="M36 -4A40 40 0 1 0 36 76A40 40 0 1 0 36 -4ZM36 14.25A21.75 21.75 0 1 0 36 57.75A21.75 21.75 0 1 0 36 14.25Z" fill="#ffffff"/>
+</g>
+<g filter="url(#tc-texture-rough)">
+<path d="M36 11.25A24.75 24.75 0 0 1 36 60.75Z" fill="#ffffff"/>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="tc-clip"><circle cx="36" cy="36" r="36"/></clipPath>
+<filter id="tc-texture-edge" x="-1" y="-1" width="74" height="74" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feTurbulence type="fractalNoise" baseFrequency="0.25 0.25" numOctaves="3" seed="5233" result="noise"/>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="tc-texture-soft" x="-6" y="-6" width="84" height="84" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feTurbulence type="fractalNoise" baseFrequency="0.25 0.25" numOctaves="3" seed="9102" result="noise"/>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="tc-texture-rough" x="30" y="6" width="36" height="60" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feTurbulence type="fractalNoise" baseFrequency="0.25 0.25" numOctaves="3" seed="5519" result="noise"/>
+<feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+</defs>
+</svg>

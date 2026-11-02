@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- ui-kit:start -->
+<style>
+/* ==========================================================================
+   Token Contrast UI.
+   Direction: monochrome — white, greys and black; soft corners; light, soft shadows.
+   Light only: the UI deliberately ignores Figma's dark theme.
+   ========================================================================== */
+
+/* ---------- Tokens ---------- */
+:root {
+  color-scheme: light;
+
+  /* Greys */
+  --ui-white: #ffffff;
+  --ui-grey-50: #fafafa;
+  --ui-grey-100: #f5f5f5;
+  --ui-grey-150: #efefef;
+  --ui-grey-200: #e8e8e8;
+  --ui-grey-300: #d9d9d9;
+  --ui-grey-350: #c4c4c4;
+  --ui-grey-400: #b3b3b3;
+  --ui-grey-500: #8c8c8c;
+  --ui-grey-600: #6b6b6b;
+  --ui-grey-800: #2b2b2b;
+  --ui-black: #0f0f0f;
+
+  /* Surfaces */
+  --ui-bg: var(--ui-white);
+  --ui-bg-subtle: var(--ui-grey-100);   /* filled inputs, grey panels */
+  --ui-bg-muted: var(--ui-grey-150);    /* chips, tracks */
+  --ui-bg-hover: var(--ui-grey-50);
+  --ui-bg-inverse: var(--ui-black);     /* logomark tiles, primary buttons */
+
+  /* Text */
+  --ui-text: var(--ui-black);
+  --ui-text-muted: var(--ui-grey-600);
+  --ui-text-faint: var(--ui-grey-400);
+  --ui-text-inverse: var(--ui-white);
+
+  /* Lines */
+  --ui-border: var(--ui-grey-150);
+  --ui-border-strong: var(--ui-grey-300);
+
+  /* Selected state — a thin black edge with a faint grey tint; pills stay soft grey */
+  --ui-selected-border: var(--ui-black); /* thin 1px black edge */
+  --ui-selected-ring: 0 0 0 0 transparent; /* set to 0 0 0 1px var(--ui-selected-border) for a 2px edge */
+  --ui-selected-bg: var(--ui-grey-50);
+  --ui-selected-pill-bg: var(--ui-grey-150);
+  --ui-selected-pill-text: var(--ui-grey-800);
+
+  /* Accent is black — the kit is monochrome */
+  --ui-accent: var(--ui-black);
+  --ui-accent-text: var(--ui-black);
+  --ui-on-accent: var(--ui-white);
+
+  /* Status — only where meaning depends on it (pass/fail, warnings) */
+  --ui-success: #1d7a46;
+  --ui-success-bg: #ebf5ee;
+  --ui-warning: #8a5a00;
+  --ui-warning-bg: #f8f1e1;
+  --ui-danger: #b8321d;
+  --ui-danger-bg: #f9ebe8;
+  --ui-info: var(--ui-grey-800);
+  --ui-info-bg: var(--ui-grey-150);
+
+  /* Data viz — soft colour, the one place the kit steps out of monochrome.
+     Use in order; each is light enough to sit softly on white but still reads as a bar. */
+  --ui-series-1: #8ea9f5; /* soft blue */
+  --ui-series-2: #f4ab8f; /* soft coral */
+  --ui-series-3: #8fd0b0; /* soft mint */
+  --ui-series-4: #c4aaf2; /* soft lilac */
+  --ui-series-5: #f2cf7c; /* soft butter */
+
+  /* Type */
+  --ui-font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ui-font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  --ui-text-2xs: 10px; /* eyebrow labels, chips */
+  --ui-text-xs: 11px;  /* captions, controls */
+  --ui-text-sm: 12px;  /* body */
+  --ui-text-md: 13px;  /* plugin title, emphasis */
+  --ui-text-lg: 15px;  /* detail headings */
+  --ui-text-xl: 20px;  /* stat numbers */
+  --ui-text-2xl: 22px; /* launch title */
+  --ui-weight-regular: 400;
+  --ui-weight-medium: 500;
+  --ui-weight-bold: 600;
+  --ui-leading: 1.45;
+
+  /* Spacing (4px grid) */
+  --ui-space-1: 4px;
+  --ui-space-2: 8px;
+  --ui-space-3: 12px;
+  --ui-space-4: 16px;
+  --ui-space-5: 24px;
+  --ui-space-6: 32px;
+  --ui-gutter: var(--ui-space-4); /* horizontal padding for every region */
+
+  /* Shape — soft corners */
+  --ui-radius-sm: 6px;
+  --ui-radius: 8px;
+  --ui-radius-lg: 12px;
+  --ui-radius-xl: 16px;
+  --ui-radius-pill: 999px;
+  --ui-control-h: 30px;
+
+  /* Elevation — light, soft shadows */
+  --ui-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --ui-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --ui-shadow: 0 2px 4px rgba(0, 0, 0, 0.03), 0 6px 16px rgba(0, 0, 0, 0.06);
+  --ui-shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.1);
+
+  --ui-focus: 0 0 0 3px rgba(15, 15, 15, 0.12);
+  --ui-transition: 140ms ease;
+
+  /* Motion — short and soft. Everything collapses to instant under prefers-reduced-motion. */
+  --ui-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ui-ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --ui-dur-fast: 140ms;
+  --ui-dur: 220ms;
+  --ui-dur-slow: 360ms;
+  --ui-stagger-step: 35ms;
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font: var(--ui-weight-regular) var(--ui-text-sm) / var(--ui-leading) var(--ui-font);
+  color: var(--ui-text);
+  background: var(--ui-bg);
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: none; box-shadow: var(--ui-focus); }
+[hidden], .ui-hidden { display: none !important; }
+
+/* ---------- Typography ---------- */
+.ui-title   { font-size: var(--ui-text-md); font-weight: var(--ui-weight-bold); line-height: 1.3; margin: 0; letter-spacing: -0.005em; }
+.ui-heading { font-size: var(--ui-text-lg); font-weight: var(--ui-weight-bold); line-height: 1.3; margin: 0; letter-spacing: -0.01em; word-break: break-word; }
+.ui-display { font-size: var(--ui-text-2xl); font-weight: var(--ui-weight-bold); line-height: 1.2; margin: 0; letter-spacing: -0.02em; }
+.ui-eyebrow { font-size: var(--ui-text-2xs); font-weight: var(--ui-weight-bold); text-transform: uppercase; letter-spacing: 0.07em; color: var(--ui-text-muted); }
+.ui-body    { font-size: var(--ui-text-sm); }
+.ui-caption { font-size: var(--ui-text-xs); color: var(--ui-text-muted); }
+.ui-mono    { font-family: var(--ui-font-mono); letter-spacing: 0.01em; }
+.ui-strong  { font-weight: var(--ui-weight-bold); color: var(--ui-text); }
+.ui-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+
+/* ---------- Logomark ---------- */
+/* Black tile, white mark. Marks are 24×24 SVGs drawn in currentColor. */
+.ui-logomark {
+  display: inline-grid; place-items: center; flex: none;
+  width: 56px; height: 56px; border-radius: var(--ui-radius-xl);
+  background: var(--ui-bg-inverse); color: var(--ui-text-inverse);
+  box-shadow: var(--ui-shadow-lg);
+}
+.ui-logomark > svg { width: 28px; height: 28px; }
+.ui-logomark--sm { width: 22px; height: 22px; border-radius: var(--ui-radius-sm); box-shadow: var(--ui-shadow-xs); }
+.ui-logomark--sm > svg { width: 13px; height: 13px; }
+
+/* ---------- App shell ---------- */
+/* <body class="ui-app"> → .ui-header / .ui-main / .ui-footer, plus an optional .ui-launch */
+.ui-app { position: relative; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+.ui-header {
+  display: flex; flex-direction: column; gap: var(--ui-space-2);
+  padding: var(--ui-space-3) var(--ui-gutter);
+  background: var(--ui-bg);
+  border-bottom: 1px solid var(--ui-border);
+}
+.ui-header-row { display: flex; align-items: center; gap: var(--ui-space-2); min-height: 24px; }
+.ui-header-row > .ui-title { flex: 1; }
+.ui-main { flex: 1; overflow-y: auto; background: var(--ui-bg); }
+.ui-footer {
+  display: flex; flex-direction: column; gap: var(--ui-space-2);
+  padding: var(--ui-space-3) var(--ui-gutter);
+  background: var(--ui-bg);
+  border-top: 1px solid var(--ui-border);
+}
+/* Footer as one row: a status note on the left, actions on the right */
+.ui-footer--bar { flex-direction: row; align-items: center; justify-content: space-between; }
+.ui-footer-note { flex: 1; min-width: 0; font-size: var(--ui-text-xs); color: var(--ui-text-muted); }
+
+/* ---------- Launch screen ---------- */
+/* Same intro on every plugin: logomark, name, one line, three points, Get started. */
+.ui-launch {
+  position: absolute; inset: 0; z-index: 10;
+  display: flex; flex-direction: column;
+  padding: var(--ui-space-6) var(--ui-gutter) var(--ui-gutter);
+  background: linear-gradient(180deg, var(--ui-white) 0%, var(--ui-grey-50) 100%);
+}
+.ui-launch-hero { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--ui-space-2); padding: var(--ui-space-4) var(--ui-space-2) var(--ui-space-5); }
+.ui-launch-hero .ui-logomark { margin-bottom: var(--ui-space-3); }
+.ui-launch-hero p { margin: 0; max-width: 280px; color: var(--ui-text-muted); font-size: var(--ui-text-sm); }
+.ui-launch-points {
+  display: flex; flex-direction: column; gap: var(--ui-space-3);
+  margin: 0; padding: var(--ui-space-4); list-style: none;
+  background: var(--ui-bg); border: 1px solid var(--ui-border); border-radius: var(--ui-radius-lg);
+  box-shadow: var(--ui-shadow-sm);
+}
+.ui-launch-points li { display: grid; grid-template-columns: 22px 1fr; gap: var(--ui-space-3); align-items: start; }
+.ui-launch-points li > b {
+  display: grid; place-items: center; width: 22px; height: 22px; border-radius: var(--ui-radius-pill);
+  background: var(--ui-bg-subtle); font-size: var(--ui-text-2xs); font-weight: var(--ui-weight-bold);
+}
+.ui-launch-points .ui-strong { display: block; font-weight: var(--ui-weight-medium); }
+.ui-launch-foot { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: var(--ui-space-2); }
+
+/* Launch, detailed: for plugins that fix a less obvious problem, explain why before how.
+   The screen scrolls if it needs to, with Get started pinned to the bottom. */
+.ui-launch:has(.ui-launch-why) { overflow-y: auto; padding-top: var(--ui-space-5); padding-bottom: 0; }
+.ui-launch:has(.ui-launch-why) .ui-launch-hero { padding: 0 var(--ui-space-2) var(--ui-space-4); }
+.ui-launch:has(.ui-launch-why) .ui-launch-foot { position: sticky; bottom: 0; padding: var(--ui-space-4) 0 var(--ui-gutter); background: linear-gradient(180deg, transparent, var(--ui-grey-50) 40%); }
+.ui-launch-label { display: block; margin: 0 var(--ui-space-1) 6px; }
+.ui-launch-why { margin-bottom: var(--ui-space-4); padding: var(--ui-space-3) var(--ui-space-4) var(--ui-space-4); background: var(--ui-bg-subtle); border-radius: var(--ui-radius-lg); }
+.ui-launch-why p { margin: 6px 0 0; font-size: var(--ui-text-xs); line-height: 1.55; color: var(--ui-text-muted); }
+.ui-launch-why strong { font-weight: var(--ui-weight-bold); color: var(--ui-text); }
+
+/* Before / after — what changes, shown as one token or component moving home */
+.ui-compare { display: grid; grid-template-columns: 40px 1fr; gap: 6px var(--ui-space-2); align-items: center; margin-top: var(--ui-space-3); }
+.ui-compare-label { font-size: var(--ui-text-2xs); font-weight: var(--ui-weight-bold); text-transform: uppercase; letter-spacing: 0.07em; color: var(--ui-text-muted); }
+.ui-compare-token {
+  display: flex; align-items: center; gap: 6px; min-width: 0; height: 30px; padding: 0 6px 0 8px;
+  font-size: var(--ui-text-xs); font-weight: var(--ui-weight-medium);
+  background: var(--ui-bg); border: 1px solid var(--ui-border); border-radius: var(--ui-radius); box-shadow: var(--ui-shadow-xs);
+}
+.ui-compare-token > svg { flex: none; color: var(--ui-text-muted); }
+.ui-compare-token > .ui-truncate { flex: 1; }
+.ui-compare-source { flex: none; display: inline-flex; align-items: center; height: 18px; padding: 0 7px; border-radius: var(--ui-radius-pill); font-size: var(--ui-text-2xs); font-weight: var(--ui-weight-bold); }
+.ui-compare-source--before { background: var(--ui-warning-bg); color: var(--ui-warning); }
+.ui-compare-source--after { background: var(--ui-success-bg); color: var(--ui-success); }
+
+/* ---------- Sections ---------- */
+.ui-section { padding: var(--ui-space-3) var(--ui-gutter); border-bottom: 1px solid var(--ui-border); }
+.ui-section:last-child { border-bottom: 0; }
+.ui-section > .ui-eyebrow { display: block; margin-bottom: var(--ui-space-2); }
+.ui-stack { display: flex; flex-direction: column; gap: var(--ui-space-2); }
+.ui-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ui-space-2); }
+.ui-divider { height: 1px; background: var(--ui-border); border: 0; margin: var(--ui-space-2) 0; }
+
+/* ---------- Form controls ---------- */
+/* Filled grey by default; white with a soft ring when focused. */
+.ui-input, .ui-select {
+  width: 100%; height: var(--ui-control-h);
+  padding: 0 10px;
+  font-size: var(--ui-text-xs);
+  color: var(--ui-text);
+  background-color: var(--ui-bg-subtle);
+  border: 1px solid transparent;
+  border-radius: var(--ui-radius);
+  transition: background-color var(--ui-transition), border-color var(--ui-transition), box-shadow var(--ui-transition);
+}
+.ui-input::placeholder { color: var(--ui-text-faint); }
+.ui-input:hover, .ui-select:hover { background-color: var(--ui-grey-150); }
+.ui-input:focus, .ui-select:focus { outline: none; background-color: var(--ui-bg); border-color: var(--ui-border-strong); box-shadow: var(--ui-focus); }
+.ui-input:disabled, .ui-select:disabled { opacity: 0.45; pointer-events: none; }
+.ui-input--outline { background-color: var(--ui-bg); border-color: var(--ui-border-strong); }
+.ui-select {
+  appearance: none; -webkit-appearance: none;
+  padding-right: 26px; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' fill='none' stroke='%236b6b6b' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M.75.75 4 4 7.25.75'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+}
+.ui-checkbox, .ui-radio { width: 14px; height: 14px; margin: 0; accent-color: var(--ui-accent); cursor: pointer; }
+.ui-check { display: inline-flex; align-items: center; gap: var(--ui-space-2); font-size: var(--ui-text-xs); cursor: pointer; }
+.ui-label { display: block; font-size: var(--ui-text-xs); font-weight: var(--ui-weight-medium); margin-bottom: var(--ui-space-1); }
+.ui-hint { font-size: var(--ui-text-xs); color: var(--ui-text-muted); margin-top: var(--ui-space-1); }
+.ui-search { position: relative; flex: 1; }
+.ui-search .ui-input { padding-left: 30px; }
+.ui-search::before {
+  content: ''; position: absolute; left: 11px; top: 50%; width: 12px; height: 12px; transform: translateY(-50%); pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%238c8c8c' stroke-width='1.3' stroke-linecap='round'%3E%3Ccircle cx='5' cy='5' r='4'/%3E%3Cpath d='m8 8 3.25 3.25'/%3E%3C/svg%3E") no-repeat;
+}
+
+/* Toggle field — checkbox · label · control(s). The control dims until checked. */
+.ui-field {
+  display: grid; grid-template-columns: 14px 104px 1fr; align-items: center;
+  gap: var(--ui-space-2); padding: 3px 0;
+}
+.ui-field--pair { grid-template-columns: 14px 104px 1fr 76px; }
+.ui-field > label { font-size: var(--ui-text-xs); cursor: pointer; }
+.ui-field:not(.is-on) > label { color: var(--ui-text-muted); }
+.ui-field:not(.is-on) > .ui-input,
+.ui-field:not(.is-on) > .ui-select { opacity: 0.45; }
+
+/* ---------- Buttons ---------- */
+.ui-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--ui-space-1);
+  height: var(--ui-control-h); padding: 0 var(--ui-space-3);
+  font-size: var(--ui-text-xs); font-weight: var(--ui-weight-medium);
+  color: var(--ui-text); background: var(--ui-bg);
+  border: 1px solid var(--ui-border-strong); border-radius: var(--ui-radius);
+  box-shadow: var(--ui-shadow-xs);
+  cursor: pointer; white-space: nowrap;
+  transition: background var(--ui-transition), box-shadow var(--ui-transition), opacity var(--ui-transition);
+}
+.ui-btn:hover { background: var(--ui-bg-hover); box-shadow: var(--ui-shadow-sm); }
+.ui-btn:disabled { opacity: 0.35; cursor: default; pointer-events: none; box-shadow: none; }
+.ui-btn--primary { background: var(--ui-accent); color: var(--ui-on-accent); border-color: transparent; box-shadow: var(--ui-shadow-sm); }
+.ui-btn--primary:hover { background: var(--ui-grey-800); box-shadow: var(--ui-shadow); }
+.ui-btn--ghost { background: transparent; border-color: transparent; box-shadow: none; }
+.ui-btn--ghost:hover { background: var(--ui-bg-subtle); box-shadow: none; }
+.ui-btn--danger { color: var(--ui-danger); }
+.ui-btn--block { width: 100%; height: 36px; font-size: var(--ui-text-sm); border-radius: var(--ui-radius-lg); }
+.ui-icon-btn {
+  display: inline-grid; place-items: center; flex: none;
+  width: var(--ui-control-h); height: var(--ui-control-h); padding: 0;
+  color: var(--ui-text-muted); background: transparent; border: 0; border-radius: var(--ui-radius); cursor: pointer;
+  transition: background var(--ui-transition), color var(--ui-transition);
+}
+.ui-icon-btn:hover, .ui-icon-btn[aria-pressed='true'] { background: var(--ui-bg-subtle); color: var(--ui-text); }
+.ui-link { padding: 0; border: 0; background: none; color: var(--ui-text); font-size: inherit; font-weight: var(--ui-weight-medium); text-decoration: underline; text-decoration-color: var(--ui-border-strong); text-underline-offset: 2px; cursor: pointer; }
+.ui-link:hover { text-decoration-color: currentColor; }
+.ui-back { padding: 0; border: 0; background: none; color: var(--ui-text-muted); font-size: var(--ui-text-xs); cursor: pointer; }
+.ui-back:hover { color: var(--ui-text); }
+
+/* Option cards — choose one of a few modes or scopes. role="radiogroup" > button[role="radio"][aria-checked] */
+.ui-options { display: flex; flex-direction: column; gap: var(--ui-space-2); }
+.ui-option {
+  display: grid; grid-template-columns: 16px 1fr; gap: 10px; width: 100%;
+  padding: 10px var(--ui-space-3); text-align: left;
+  background: var(--ui-bg); border: 1px solid var(--ui-border); border-radius: var(--ui-radius-lg);
+  box-shadow: var(--ui-shadow-xs); cursor: pointer;
+  transition: border-color var(--ui-transition), box-shadow var(--ui-transition);
+}
+.ui-option:hover { border-color: var(--ui-border-strong); }
+.ui-option[aria-checked='true'] { border-color: var(--ui-selected-border); background: var(--ui-selected-bg); box-shadow: var(--ui-selected-ring), var(--ui-shadow-sm); }
+.ui-option-radio { position: relative; width: 16px; height: 16px; margin-top: 1px; border-radius: var(--ui-radius-pill); border: 1.5px solid var(--ui-border-strong); }
+.ui-option[aria-checked='true'] .ui-option-radio { border-color: var(--ui-black); }
+.ui-option[aria-checked='true'] .ui-option-radio::after { content: ''; position: absolute; inset: 3px; border-radius: inherit; background: var(--ui-black); }
+.ui-option-title { display: block; font-size: var(--ui-text-sm); font-weight: var(--ui-weight-bold); }
+.ui-option-desc { display: block; margin-top: 2px; font-size: var(--ui-text-xs); line-height: 1.45; color: var(--ui-text-muted); }
+
+/* Segmented control */
+.ui-seg { display: inline-flex; padding: 3px; gap: 2px; background: var(--ui-bg-subtle); border-radius: var(--ui-radius); }
+.ui-seg > button {
+  height: 24px; padding: 0 var(--ui-space-3); border: 0; border-radius: var(--ui-radius-sm);
+  font-size: var(--ui-text-xs); color: var(--ui-text-muted); background: transparent; cursor: pointer;
+  transition: background var(--ui-transition), color var(--ui-transition);
+}
+.ui-seg > button[aria-pressed='true'] { background: var(--ui-bg); color: var(--ui-text); font-weight: var(--ui-weight-medium); box-shadow: var(--ui-shadow-sm); }
+
+/* ---------- Badges & chips ---------- */
+.ui-badge {
+  display: inline-flex; align-items: center; gap: 3px; height: 20px; padding: 0 8px;
+  font-size: var(--ui-text-2xs); font-weight: var(--ui-weight-bold); letter-spacing: 0.03em;
+  border-radius: var(--ui-radius-pill); background: var(--ui-bg-muted); color: var(--ui-text-muted); white-space: nowrap;
+}
+.ui-badge--success { background: var(--ui-success-bg); color: var(--ui-success); }
+.ui-badge--warning { background: var(--ui-warning-bg); color: var(--ui-warning); }
+.ui-badge--danger  { background: var(--ui-danger-bg);  color: var(--ui-danger); }
+.ui-badge--info    { background: var(--ui-info-bg);    color: var(--ui-info); }
+.ui-badge--solid   { background: var(--ui-bg-inverse); color: var(--ui-text-inverse); }
+.ui-badge--selected { background: var(--ui-selected-pill-bg); color: var(--ui-selected-pill-text); }
+.ui-chip {
+  display: inline-flex; align-items: center; height: 18px; padding: 0 6px; flex: none;
+  font-size: var(--ui-text-2xs); font-weight: var(--ui-weight-medium); color: var(--ui-text-muted);
+  background: var(--ui-bg-subtle); border-radius: var(--ui-radius-sm);
+}
+
+/* ---------- Cards & lists ---------- */
+.ui-card { background: var(--ui-bg); border: 1px solid var(--ui-border); border-radius: var(--ui-radius-lg); box-shadow: var(--ui-shadow-sm); overflow: hidden; }
+.ui-card-header { display: flex; align-items: center; gap: var(--ui-space-3); padding: 10px var(--ui-space-3); }
+.ui-card-body { padding: var(--ui-space-2) var(--ui-space-3); }
+.ui-card-header + .ui-card-body, .ui-card-body + .ui-card-body { border-top: 1px solid var(--ui-border); }
+.ui-panel { padding: var(--ui-space-3); background: var(--ui-bg-subtle); border-radius: var(--ui-radius-lg); }
+
+.ui-list { display: flex; flex-direction: column; padding: var(--ui-space-1) var(--ui-space-2); }
+.ui-row {
+  display: flex; align-items: center; gap: var(--ui-space-3); width: 100%;
+  padding: var(--ui-space-2); text-align: left;
+  background: transparent; border: 0; border-radius: var(--ui-radius); cursor: pointer;
+  transition: background var(--ui-transition);
+}
+.ui-row:hover { background: var(--ui-bg-subtle); }
+.ui-row-text { flex: 1; min-width: 0; }
+.ui-row-title { font-weight: var(--ui-weight-medium); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ui-row-sub { font-size: var(--ui-text-xs); color: var(--ui-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ui-row-icon {
+  display: grid; place-items: center; flex: none; width: 28px; height: 28px;
+  border-radius: var(--ui-radius); background: var(--ui-bg-subtle); color: var(--ui-text-muted);
+}
+.ui-meta { padding: var(--ui-space-3) var(--ui-gutter) var(--ui-space-1); font-size: var(--ui-text-xs); color: var(--ui-text-muted); }
+
+/* Static items inside a card, e.g. a preview of what will change */
+.ui-items { max-height: 180px; overflow-y: auto; }
+.ui-items > * { padding: var(--ui-space-2) var(--ui-space-3); }
+.ui-items > * + * { border-top: 1px solid var(--ui-border); }
+.ui-items .ui-row-title { white-space: normal; word-break: break-word; font-size: var(--ui-text-xs); }
+
+/* Key/value line inside a card, e.g. a token alias chain */
+.ui-kv { display: flex; align-items: center; gap: var(--ui-space-2); padding: 3px 0; font-size: var(--ui-text-xs); }
+.ui-kv > .ui-truncate { flex: 1; }
+
+/* ---------- Data ---------- */
+.ui-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--ui-space-2); }
+.ui-stats > * { padding: 10px var(--ui-space-3); background: var(--ui-bg-subtle); border-radius: var(--ui-radius-lg); }
+.ui-stats--2 { grid-template-columns: 1fr 1fr; }
+.ui-stat-value { font-size: var(--ui-text-xl); font-weight: var(--ui-weight-bold); line-height: 1.15; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.ui-stat-value.is-muted { color: var(--ui-text-faint); }
+.ui-stat-value.is-warn { color: var(--ui-warning); }
+.ui-stat-label { font-size: var(--ui-text-xs); color: var(--ui-text-muted); }
+.ui-legend { display: flex; gap: var(--ui-space-3); font-size: var(--ui-text-xs); color: var(--ui-text-muted); }
+.ui-legend-dot { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: var(--ui-space-1); }
+
+.ui-swatch {
+  position: relative; flex: none; width: 32px; height: 32px; overflow: hidden;
+  border-radius: var(--ui-radius); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+.ui-swatch--sm { width: 16px; height: 16px; border-radius: 4px; }
+.ui-swatch--dot { width: 8px; height: 8px; border-radius: 50%; }
+.ui-swatch--checker {
+  background:
+    linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%) 0 0 / 8px 8px,
+    linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%) 4px 4px / 8px 8px, #fff;
+}
+.ui-swatch > i { position: absolute; inset: 0; }
+
+/* ---------- Feedback ---------- */
+.ui-state {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--ui-space-1);
+  padding: var(--ui-space-6) var(--ui-gutter); text-align: center; color: var(--ui-text-muted);
+}
+.ui-state-icon {
+  display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: var(--ui-space-2);
+  border-radius: var(--ui-radius-lg); background: var(--ui-bg-subtle); color: var(--ui-text-muted);
+}
+.ui-state-title { font-size: var(--ui-text-md); font-weight: var(--ui-weight-bold); color: var(--ui-text); }
+.ui-state--error .ui-state-title { color: var(--ui-danger); }
+.ui-state--error .ui-state-icon { background: var(--ui-danger-bg); color: var(--ui-danger); }
+.ui-state--inline { align-items: flex-start; text-align: left; padding: var(--ui-space-3) 0; }
+
+.ui-callout {
+  padding: 10px var(--ui-space-3); border-radius: var(--ui-radius);
+  font-size: var(--ui-text-xs); line-height: 1.5; background: var(--ui-bg-subtle); color: var(--ui-text);
+}
+.ui-callout--warning { background: var(--ui-warning-bg); color: var(--ui-warning); }
+.ui-callout--danger  { background: var(--ui-danger-bg);  color: var(--ui-danger); }
+.ui-callout--info    { background: var(--ui-info-bg);    color: var(--ui-info); }
+
+.ui-progress { height: 4px; background: var(--ui-bg-muted); border-radius: var(--ui-radius-pill); overflow: hidden; }
+.ui-progress > i { display: block; height: 100%; background: var(--ui-accent); border-radius: inherit; transition: width 150ms ease; }
+.ui-progress--indeterminate > i { width: 30%; animation: ui-slide 1.1s ease-in-out infinite; }
+@keyframes ui-slide { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
+@media (prefers-reduced-motion: reduce) { .ui-progress--indeterminate > i { animation: none; width: 100%; opacity: 0.4; } }
+
+.ui-log {
+  max-height: 120px; overflow-y: auto; padding: var(--ui-space-2) 10px;
+  font: var(--ui-text-2xs) / 1.6 var(--ui-font-mono);
+  background: var(--ui-bg-subtle); border-radius: var(--ui-radius);
+}
+.ui-log .is-error { color: var(--ui-danger); }
+.ui-log .is-ok { color: var(--ui-success); }
+
+/* Run status — what the plugin is doing now, or what it just did */
+.ui-status { display: grid; grid-template-columns: 14px 1fr; gap: 10px; padding: 10px var(--ui-space-3); border-radius: var(--ui-radius-lg); background: var(--ui-bg-subtle); }
+.ui-status-icon { width: 14px; height: 14px; margin-top: 1px; border-radius: var(--ui-radius-pill); background: var(--ui-grey-400); }
+.ui-status-title { display: block; font-size: var(--ui-text-xs); font-weight: var(--ui-weight-bold); }
+.ui-status-detail { display: block; margin-top: 2px; font-size: var(--ui-text-xs); line-height: 1.45; color: var(--ui-text-muted); }
+.ui-status--running .ui-status-icon, .ui-spinner { border: 2px solid var(--ui-grey-200); border-top-color: var(--ui-black); background: none; animation: ui-spin 0.8s linear infinite; }
+.ui-status--done .ui-status-icon { background: var(--ui-success); box-shadow: 0 0 0 3px var(--ui-success-bg); }
+.ui-status--error { background: var(--ui-danger-bg); }
+.ui-status--error .ui-status-icon { background: var(--ui-danger); }
+.ui-status--error .ui-status-title { color: var(--ui-danger); }
+.ui-spinner { display: inline-block; width: 14px; height: 14px; border-radius: var(--ui-radius-pill); }
+@keyframes ui-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .ui-status--running .ui-status-icon, .ui-spinner { animation-duration: 2.4s; } }
+
+/* ==========================================================================
+   Motion
+   Elements animate when they appear — inserted, or shown after display:none.
+   ========================================================================== */
+@keyframes ui-fade-in { from { opacity: 0; } }
+@keyframes ui-fade-up { from { opacity: 0; transform: translateY(6px); } }
+@keyframes ui-fade-down { from { opacity: 0; transform: translateY(-4px); } }
+@keyframes ui-slide-in { from { opacity: 0; transform: translateX(14px); } }
+@keyframes ui-pop { from { opacity: 0; transform: scale(0.85); } }
+@keyframes ui-grow-y { from { transform: scaleY(0); } }
+@keyframes ui-launch-out { to { opacity: 0; transform: translateY(-10px) scale(0.985); } }
+
+/* Launch: mark pops, copy and points stagger, then it lifts away on Get started */
+.ui-launch-hero .ui-logomark { animation: ui-pop 480ms var(--ui-ease-spring) 60ms both; }
+.ui-launch-hero > h1 { animation: ui-fade-up var(--ui-dur-slow) var(--ui-ease-out) 140ms both; }
+.ui-launch-hero > p { animation: ui-fade-up var(--ui-dur-slow) var(--ui-ease-out) 190ms both; }
+.ui-launch-why { animation: ui-fade-up var(--ui-dur-slow) var(--ui-ease-out) 230ms both; }
+.ui-compare-token { animation: ui-fade-up var(--ui-dur-slow) var(--ui-ease-out) both; }
+.ui-compare > :nth-child(2) { animation-delay: 320ms; }
+.ui-compare > :nth-child(4) { animation-delay: 420ms; }
+.ui-launch-label { animation: ui-fade-in var(--ui-dur-slow) var(--ui-ease-out) 260ms both; }
+.ui-launch-points { animation: ui-fade-up var(--ui-dur-slow) var(--ui-ease-out) 240ms both; }
+.ui-launch-points li { animation: ui-fade-up var(--ui-dur-slow) var(--ui-ease-out) both; }
+.ui-launch-points li:nth-child(1) { animation-delay: 300ms; }
+.ui-launch-points li:nth-child(2) { animation-delay: 360ms; }
+.ui-launch-points li:nth-child(3) { animation-delay: 420ms; }
+.ui-launch-foot { animation: ui-fade-up var(--ui-dur-slow) var(--ui-ease-out) 480ms both; }
+.ui-launch.is-leaving { animation: ui-launch-out 260ms var(--ui-ease-out) forwards; pointer-events: none; }
+.ui-app.is-launched > .ui-header { animation: ui-fade-up var(--ui-dur-slow) var(--ui-ease-out) 120ms both; }
+.ui-app.is-launched > .ui-main { animation: ui-fade-up var(--ui-dur-slow) var(--ui-ease-out) 180ms both; }
+.ui-app.is-launched > .ui-footer { animation: ui-fade-in var(--ui-dur-slow) var(--ui-ease-out) 240ms both; }
+
+/* Press feedback */
+.ui-btn, .ui-option, .ui-row, .ui-icon-btn { transition: background var(--ui-transition), border-color var(--ui-transition), box-shadow var(--ui-transition), color var(--ui-transition), opacity var(--ui-transition), transform var(--ui-dur-fast) var(--ui-ease-out); }
+.ui-btn:active { transform: scale(0.97); }
+.ui-option:active, .ui-row:active { transform: scale(0.992); }
+.ui-icon-btn > svg { transition: transform var(--ui-dur) var(--ui-ease-spring); }
+.ui-icon-btn[aria-pressed='true'] > svg { transform: rotate(60deg); }
+
+/* Selection */
+.ui-option[aria-checked='true'] .ui-option-radio::after { animation: ui-pop var(--ui-dur) var(--ui-ease-spring); }
+.ui-option-radio { transition: border-color var(--ui-transition); }
+.ui-seg > button { transition: background var(--ui-transition), color var(--ui-transition), box-shadow var(--ui-dur) var(--ui-ease-out); }
+.ui-field > .ui-input, .ui-field > .ui-select, .ui-field > label { transition: opacity var(--ui-dur) var(--ui-ease-out), color var(--ui-dur) var(--ui-ease-out); }
+
+/* Arrivals */
+.ui-card, .ui-callout, .ui-state, .ui-status, .ui-panel { animation: ui-fade-up var(--ui-dur) var(--ui-ease-out) both; }
+.ui-badge { animation: ui-pop var(--ui-dur) var(--ui-ease-spring) both; }
+.ui-status--done .ui-status-icon, .ui-status--error .ui-status-icon { animation: ui-pop 320ms var(--ui-ease-spring) both; }
+.ui-stats > * { animation: ui-fade-up var(--ui-dur) var(--ui-ease-out) both; }
+.ui-stats > :nth-child(2) { animation-delay: 40ms; }
+.ui-stats > :nth-child(3) { animation-delay: 80ms; }
+.ui-stats > :nth-child(4) { animation-delay: 120ms; }
+
+/* Stagger: add .ui-stagger to a container (or use .ui-items) to cascade its first children in */
+.ui-stagger > *, .ui-items > * { animation: ui-fade-up var(--ui-dur) var(--ui-ease-out) both; }
+.ui-stagger > :nth-child(2), .ui-items > :nth-child(2) { animation-delay: calc(var(--ui-stagger-step) * 1); }
+.ui-stagger > :nth-child(3), .ui-items > :nth-child(3) { animation-delay: calc(var(--ui-stagger-step) * 2); }
+.ui-stagger > :nth-child(4), .ui-items > :nth-child(4) { animation-delay: calc(var(--ui-stagger-step) * 3); }
+.ui-stagger > :nth-child(5), .ui-items > :nth-child(5) { animation-delay: calc(var(--ui-stagger-step) * 4); }
+.ui-stagger > :nth-child(6), .ui-items > :nth-child(6) { animation-delay: calc(var(--ui-stagger-step) * 5); }
+.ui-stagger > :nth-child(7), .ui-items > :nth-child(7) { animation-delay: calc(var(--ui-stagger-step) * 6); }
+.ui-stagger > :nth-child(8), .ui-items > :nth-child(8) { animation-delay: calc(var(--ui-stagger-step) * 7); }
+.ui-stagger > :nth-child(9), .ui-items > :nth-child(9) { animation-delay: calc(var(--ui-stagger-step) * 8); }
+.ui-stagger > :nth-child(n+10), .ui-items > :nth-child(n+10) { animation-delay: calc(var(--ui-stagger-step) * 9); }
+
+/* Reduced motion: keep spinners turning slowly, make everything else instant */
+@media (prefers-reduced-motion: reduce) {
+  *:not(.ui-spinner):not(.ui-status--running .ui-status-icon):not(.ui-progress--indeterminate > i), *::before, *::after {
+    animation-duration: 1ms !important; animation-delay: 0ms !important; transition-duration: 1ms !important;
+  }
+}
+</style>
+<!-- ui-kit:end -->
+<style>
+  /* Token Contrast */
+  .ratio { font: var(--ui-weight-bold) var(--ui-text-xl) / 1 var(--ui-font-mono); letter-spacing: -0.02em; }
+  .ratio.pass { color: var(--ui-success); }
+  .ratio.warn { color: var(--ui-warning); }
+  .ratio.fail { color: var(--ui-danger); }
+  .levels { display: grid; grid-template-columns: 1fr 1fr; }
+  .levels > div { padding: var(--ui-space-2) var(--ui-space-3); }
+  .levels > div + div { border-left: 1px solid var(--ui-border); }
+  .levels .ui-eyebrow { display: block; margin-bottom: var(--ui-space-1); }
+  .chain-arrow { width: 10px; flex: none; text-align: center; color: var(--ui-text-faint); }
+</style>
+</head>
+<body class="ui-app">
+
+<section class="ui-launch" id="launch" aria-labelledby="launch-title">
+  <div class="ui-launch-hero">
+    <span class="ui-logomark"><svg viewBox="0 0 72 72" fill="none" aria-hidden="true"><g filter="url(#tc-launch-texture-edge)"><g clip-path="url(#tc-launch-clip)"><g filter="url(#tc-launch-texture-soft)"><path fill-rule="evenodd" d="M36 -4A40 40 0 1 0 36 76A40 40 0 1 0 36 -4ZM36 14.25A21.75 21.75 0 1 0 36 57.75A21.75 21.75 0 1 0 36 14.25Z" fill="#ffffff"/></g><g filter="url(#tc-launch-texture-rough)"><path d="M36 11.25A24.75 24.75 0 0 1 36 60.75Z" fill="#ffffff"/></g></g></g><defs><clipPath id="tc-launch-clip"><circle cx="36" cy="36" r="36"/></clipPath><filter id="tc-launch-texture-edge" x="-1" y="-1" width="74" height="74" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.25 0.25" numOctaves="3" seed="5233" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="tc-launch-texture-soft" x="-6" y="-6" width="84" height="84" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.25 0.25" numOctaves="3" seed="9102" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="tc-launch-texture-rough" x="30" y="6" width="36" height="60" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.25 0.25" numOctaves="3" seed="5519" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg></span>
+    <h1 class="ui-display" id="launch-title">Token Contrast</h1>
+    <p>Check the contrast of token-bound colours against what sits behind them.</p>
+  </div>
+  <ol class="ui-launch-points">
+    <li><b>1</b><div><span class="ui-strong">Select a layer</span><span class="ui-caption">It reads the fill and finds the nearest parent background.</span></div></li>
+    <li><b>2</b><div><span class="ui-strong">Follows your tokens</span><span class="ui-caption">Aliases are traced to the primitive, in the mode that’s actually applied.</span></div></li>
+    <li><b>3</b><div><span class="ui-strong">WCAG at a glance</span><span class="ui-caption">AA and AAA for normal and large text, with alpha composited.</span></div></li>
+  </ol>
+  <div class="ui-launch-foot">
+    <button class="ui-btn ui-btn--primary ui-btn--block" id="launch-start">Get started</button>
+  </div>
+</section>
+
+<header class="ui-header">
+  <div class="ui-header-row">
+    <span class="ui-logomark ui-logomark--sm"><svg viewBox="0 0 72 72" fill="none" aria-hidden="true"><g filter="url(#tc-header-texture-edge)"><g clip-path="url(#tc-header-clip)"><g filter="url(#tc-header-texture-soft)"><path fill-rule="evenodd" d="M36 -4A40 40 0 1 0 36 76A40 40 0 1 0 36 -4ZM36 14.25A21.75 21.75 0 1 0 36 57.75A21.75 21.75 0 1 0 36 14.25Z" fill="#ffffff"/></g><g filter="url(#tc-header-texture-rough)"><path d="M36 11.25A24.75 24.75 0 0 1 36 60.75Z" fill="#ffffff"/></g></g></g><defs><clipPath id="tc-header-clip"><circle cx="36" cy="36" r="36"/></clipPath><filter id="tc-header-texture-edge" x="-1" y="-1" width="74" height="74" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.25 0.25" numOctaves="3" seed="5233" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="tc-header-texture-soft" x="-6" y="-6" width="84" height="84" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.25 0.25" numOctaves="3" seed="9102" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G"/></filter><filter id="tc-header-texture-rough" x="30" y="6" width="36" height="60" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.25 0.25" numOctaves="3" seed="5519" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg></span>
+    <h1 class="ui-title">Token Contrast</h1>
+  </div>
+  <div class="ui-header-row" id="subject">
+    <span class="ui-caption">Checks contrast for the selected layer’s token-bound fill.</span>
+  </div>
+</header>
+
+<main class="ui-main ui-stagger" id="app"></main>
+
+<footer class="ui-footer ui-footer--bar">
+  <span class="ui-footer-note">Auto-updates as you change selection</span>
+  <div class="ui-cluster">
+    <button class="ui-btn" id="refresh-btn">Refresh</button>
+    <button class="ui-btn ui-btn--ghost" id="close-btn">Close</button>
+  </div>
+</footer>
+
+<script>
+  var app = document.getElementById('app');
+  // Launch screen: shown each time the plugin opens.
+  document.getElementById('launch-start').onclick = function() {
+    // Lift the launch screen away, then let the app ease in behind it.
+    var launch = document.getElementById('launch');
+    launch.classList.add('is-leaving');
+    document.body.classList.add('is-launched');
+    setTimeout(function() { launch.hidden = true; }, 260);
+  };
+  var subject = document.getElementById('subject');
+
+  var ICON_INFO = '<span class="ui-state-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg></span>';
+
+  function escHtml(s) {
+    if (!s) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function ratioClass(ratio) {
+    if (ratio >= 7) return 'pass';
+    if (ratio >= 4.5) return 'warn';
+    return 'fail';
+  }
+
+  function badge(pass, label) {
+    return '<span class="ui-badge ui-badge--' + (pass ? 'success' : 'danger') + '">' + (pass ? '✓ ' : '✗ ') + label + '</span>';
+  }
+
+  function state(title, text, isError) {
+    return '<div class="ui-state' + (isError ? ' ui-state--error' : '') + '">' + ICON_INFO +
+      '<div class="ui-state-title">' + escHtml(title) + '</div>' + (text ? '<div>' + escHtml(text) + '</div>' : '') + '</div>';
+  }
+
+  function modeTag(collectionName, modeName) {
+    if (!collectionName) return 'Raw value';
+    return escHtml(collectionName) + (modeName ? ' / ' + escHtml(modeName) : '');
+  }
+
+  function renderChain(steps) {
+    if (!steps || steps.length === 0) {
+      return '<div class="ui-card-body"><div class="ui-kv ui-caption">Raw value (no token)</div></div>';
+    }
+    var html = '<div class="ui-card-body">';
+    steps.forEach(function(step, i) {
+      var dot = step.colorHex ? 'background:' + step.colorHex : 'background:var(--ui-bg-muted)';
+      html += '<div class="ui-kv">';
+      html += '<span class="chain-arrow">' + (i > 0 ? '↳' : '') + '</span>';
+      html += '<span class="ui-swatch ui-swatch--dot" style="' + dot + '"></span>';
+      html += '<span class="ui-truncate">' + escHtml(step.name) + '</span>';
+      html += '<span class="ui-chip">' + escHtml(step.collectionName) + '</span>';
+      html += '</div>';
+    });
+    return html + '</div>';
+  }
+
+  function colourCard(c, extraMeta, alpha) {
+    var swatch = alpha
+      ? '<span class="ui-swatch ui-swatch--checker"><i style="background:' + c.hex + ';opacity:' + c.alpha + '"></i></span>'
+      : '<span class="ui-swatch" style="background:' + (c.hex || 'var(--ui-bg-muted)') + '"></span>';
+    var html = '<div class="ui-card"><div class="ui-card-header">' + swatch + '<div class="ui-row-text">';
+    html += '<div class="ui-cluster" style="gap:6px"><span class="ui-mono ui-strong">' + (c.hex || '—') + '</span>';
+    if (alpha) html += '<span class="ui-badge ui-badge--info ui-mono">α ' + Math.round(c.alpha * 100) + '%</span>';
+    html += '</div><div class="ui-caption ui-truncate">' + modeTag(c.collectionName, c.modeName) + (extraMeta || '') + '</div>';
+    html += '</div></div>' + renderChain(c.steps) + '</div>';
+    return html;
+  }
+
+  function render(data) {
+    if (data.type === 'error') {
+      subject.innerHTML = '<span class="ui-caption">Nothing to check yet.</span>';
+      app.innerHTML = state(data.message, '', /^Error/.test(data.message));
+      return;
+    }
+    if (data.type === 'loading') {
+      app.innerHTML = '<div class="ui-state"><div class="ui-state-title">Analysing…</div><div class="ui-progress ui-progress--indeterminate" style="width:120px"><i></i></div></div>';
+      return;
+    }
+    if (data.type !== 'result') return;
+
+    subject.innerHTML = '<span class="ui-chip">' + escHtml(data.nodeType) + '</span><span class="ui-truncate ui-strong" style="font-weight:500">' + escHtml(data.nodeName) + '</span>';
+
+    var html = '';
+
+    // ── Foreground ──
+    html += '<section class="ui-section"><span class="ui-eyebrow">Foreground</span>';
+    html += colourCard(data.fg, '', data.fg.hasAlpha);
+    html += '</section>';
+
+    // ── Background ──
+    html += '<section class="ui-section"><span class="ui-eyebrow">Background</span>';
+    if (data.noBackground || !data.bg) {
+      html += data.alphaNoBackground
+        ? '<div class="ui-callout ui-callout--warning">This token has alpha (' + Math.round(data.fg.alpha * 100) + '%) but no parent fill was found to composite against. Add a fill to a parent frame to calculate accurate contrast.</div>'
+        : '<div class="ui-callout ui-callout--warning">No parent with a solid fill found. Add a fill to a parent frame to test contrast.</div>';
+    } else {
+      var from = data.bg.parentName ? ' · from ' + escHtml(data.bg.parentName) : '';
+      html += colourCard(data.bg, from, false);
+    }
+    html += '</section>';
+
+    // ── Contrast ──
+    if (data.contrast) {
+      var c = data.contrast;
+      html += '<section class="ui-section"><span class="ui-eyebrow">Contrast</span><div class="ui-card">';
+      html += '<div class="ui-card-header" style="justify-content:space-between">';
+      html += '<span class="ui-caption">' + (c.wasComposited ? 'Contrast ratio (composited)' : 'Contrast ratio') + '</span>';
+      html += '<span class="ratio ' + ratioClass(c.ratio) + '" data-ratio="' + c.ratio + '">' + c.ratio + ':1</span></div>';
+      if (c.wasComposited && c.compositedHex) {
+        html += '<div class="ui-card-body"><div class="ui-kv"><span class="ui-swatch ui-swatch--sm" style="background:' + c.compositedHex + '"></span>';
+        html += '<span class="ui-truncate ui-caption">Effective rendered colour</span><span class="ui-mono ui-strong">' + c.compositedHex + '</span></div></div>';
+      }
+      html += '<div class="levels" style="border-top:1px solid var(--ui-border)">';
+      html += '<div><span class="ui-eyebrow">Normal text</span><div class="ui-cluster" style="gap:4px">' + badge(c.normalAA, 'AA') + badge(c.normalAAA, 'AAA') + '</div></div>';
+      html += '<div><span class="ui-eyebrow">Large text</span><div class="ui-cluster" style="gap:4px">' + badge(c.largeAA, 'AA') + badge(c.largeAAA, 'AAA') + '</div></div>';
+      html += '</div></div></section>';
+    }
+
+    app.innerHTML = html;
+    countUpRatio(app.querySelector('[data-ratio]'));
+  }
+
+  // Counts the contrast ratio up from 1:1 so the result lands with a little weight.
+  function countUpRatio(el) {
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var end = parseFloat(el.getAttribute('data-ratio')), start = performance.now(), dur = 650;
+    function tick(now) {
+      var t = Math.min(1, (now - start) / dur), eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = (Math.round((1 + (end - 1) * eased) * 100) / 100) + ':1';
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  app.innerHTML = state('Select a layer', 'Pick a layer with a token-bound fill to check its contrast.');
+
+  window.onmessage = function(event) {
+    var msg = event.data.pluginMessage;
+    if (!msg) return;
+    render(msg);
+  };
+
+  document.getElementById('refresh-btn').addEventListener('click', function() {
+    parent.postMessage({ pluginMessage: { type: 'analyse' } }, '*');
+  });
+
+  document.getElementById('close-btn').addEventListener('click', function() {
+    parent.postMessage({ pluginMessage: { type: 'close' } }, '*');
+  });
+
+  // Trigger initial analyse
+  parent.postMessage({ pluginMessage: { type: 'analyse' } }, '*');
+</script>
+</body>
+</html>
