@@ -1,10 +1,12 @@
 # Install Token Contrast
 
-Token Contrast checks a layer’s fill against the fill behind it, and follows color tokens through their alias chain to do it. Most people should install the published plugin. The last section is for running this repository.
+Token Contrast checks a layer’s fill against the fill behind it, and follows color tokens through their alias chain to do it.
+
+The Figma Community version is pending review. Until that listing is approved, install the plugin from this repository with the steps in [Run this repository](#run-this-repository).
 
 ## Install from Figma Community
 
-The published plugin runs in the Figma desktop app and in the browser.
+**Pending review.** This listing is submitted to Figma and is not available to install yet. The steps below are the ones to use once Figma approves it. The published plugin runs in the Figma desktop app and in the browser.
 
 1. Open **[Token Contrast](https://www.figma.com/community/plugin/1691903395331204623/token-contrast)** on Figma Community.
 2. Sign in, if Figma asks you to.
@@ -51,7 +53,7 @@ If the foreground token is semi-transparent, the ratio is calculated on the colo
 
 ## Run this repository
 
-Use this when you want to change the plugin. Development plugins run in the **Figma desktop app**. They do not run in the browser.
+This is how to install Token Contrast while the Community version is pending review, and how to work on the plugin after that. Development plugins run in the **Figma desktop app**. They do not run in the browser.
 
 1. Clone the repository.
 

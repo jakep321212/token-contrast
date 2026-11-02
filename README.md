@@ -8,11 +8,11 @@ It reports the contrast ratio and whether the pair passes WCAG AA and AAA for no
 
 ## Install
 
-Install the published plugin from Figma Community:
+The Figma Community version is pending review. Until Figma approves the listing, install Token Contrast from this repository. Development plugins run in the Figma desktop app.
 
-**[Token Contrast on Figma Community](https://www.figma.com/community/plugin/1691903395331204623/token-contrast)**
+The steps, including how to run it and how to read the result, are in the [install guide](INSTALL.md).
 
-Open that page and choose **Open in Figma**. The plugin is then available in any Design file. The full steps, including how to run it, how to read the result, and how to run this repository, are in the [install guide](INSTALL.md).
+The Community listing, for when the review is finished: **[Token Contrast on Figma Community](https://www.figma.com/community/plugin/1691903395331204623/token-contrast)**
 
 ## What it checks
 
